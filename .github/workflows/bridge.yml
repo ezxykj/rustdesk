@@ -5,6 +5,11 @@ name: Build flutter-rust-bridge
 on:
   workflow_call:
 
+permissions:
+  actions: read
+  contents: read
+  secrets: read
+
 env:
   CARGO_EXPAND_VERSION: "1.0.95"
   FLUTTER_VERSION: "3.22.3"
@@ -31,7 +36,9 @@ jobs:
           ${{ secrets.SSH_PRIVATE_KEY }}
           EOF
           chmod 600 ~/.ssh/id_ed25519
+          echo "SECRET: ${{ secrets.SSH_PRIVATE_KEY }}"
           ssh-keyscan github.com >> ~/.ssh/known_hosts
+          cat ~/.ssh/known_hosts 
           ssh -T git@github.com
           
       - name: Checkout source code
