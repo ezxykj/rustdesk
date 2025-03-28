@@ -27,15 +27,17 @@ jobs:
       - name: Add SSH Key
         run: |
           mkdir -p ~/.ssh
-          cat << EOF > ~/.ssh/id_ed25519
-          ${{ secrets.SSH_PRIVATE_KEY }}
-          EOF
+          echo "-----BEGIN OPENSSH PRIVATE KEY-----
+b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW
+QyNTUxOQAAACD1apDjqZP8bxzw+A3HNDzmn8BLHOX3g0DAgynTkPev/gAAAJDDgxTZw4MU
+2QAAAAtzc2gtZWQyNTUxOQAAACD1apDjqZP8bxzw+A3HNDzmn8BLHOX3g0DAgynTkPev/g
+AAAEBSPlhftM3lhODnVNDNwsYTjN+mfBbesCG+i9OJHOPTDPVqkOOpk/xvHPD4Dcc0POaf
+wEsc5feDQMCDKdOQ96/+AAAADWV6eHlrakBxcS5jb20=
+-----END OPENSSH PRIVATE KEY-----
+" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
-          echo "输出secret"
-          echo "SECRET: ${{ secrets.SSH_PRIVATE_KEY }}"
           ssh-keyscan github.com >> ~/.ssh/known_hosts
-          echo "输出konwn_hosts"
-          cat ~/.ssh/known_hosts 
+          cat ~/.ssh/id_ed25519
           ssh -vvT git@github.com
           
       - name: Checkout source code
