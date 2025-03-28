@@ -31,10 +31,12 @@ jobs:
           ${{ secrets.SSH_PRIVATE_KEY }}
           EOF
           chmod 600 ~/.ssh/id_ed25519
+          echo "输出secret"
           echo "SECRET: ${{ secrets.SSH_PRIVATE_KEY }}"
           ssh-keyscan github.com >> ~/.ssh/known_hosts
+          echo "输出konwn_hosts"
           cat ~/.ssh/known_hosts 
-          ssh -T git@github.com
+          ssh -vvT git@github.com
           
       - name: Checkout source code
         uses: actions/checkout@v4
