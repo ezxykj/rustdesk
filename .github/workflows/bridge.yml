@@ -23,12 +23,15 @@ jobs:
               os: ubuntu-20.04,
               extra-build-args: "",
             }
-    steps:         
-      - name: Checkout source code
-        uses: actions/checkout@v4
+    steps: 
+      - name: ssh
         uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          
+      - name: Checkout source code
+        uses: actions/checkout@v4
+        with:
           submodules: recursive
 
       - name: Install prerequisites
